@@ -79,10 +79,12 @@ const typeDefs = `
     priority: Float
     global: Boolean
     colour: String
+    resourceTemplate: ResourceTemplate
   }
 
   type Query {
     node(nodeId: ID): NodeObject
+   
   }
 `;
 
