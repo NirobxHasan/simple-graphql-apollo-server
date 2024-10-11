@@ -84,7 +84,7 @@ const typeDefs = `
 
   type Query {
     node(nodeId: ID): NodeObject
-   
+    nodesByCompositeId(compositeId: ID!): [NodeObject]
   }
 `;
 

@@ -24,6 +24,10 @@ const resolvers = {
       const nodes = readJSONFile("node");
       return nodes.find((node) => node._id === args.nodeId);
     },
+    nodesByCompositeId: (parent, args) => {
+      const nodes = readJSONFile("node");
+      return nodes.filter((node) => node.compositeId === args.compositeId);
+    },
   },
 
   NodeObject: {
