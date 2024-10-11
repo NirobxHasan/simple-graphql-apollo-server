@@ -28,20 +28,24 @@ const resolvers = {
       const nodes = readJSONFile("node");
       return nodes.filter((node) => node.compositeId === args.compositeId);
     },
+    action: (parent, args) => {
+      const actions = readJSONFile("action");
+      return actions.find((action) => action._id === args.actionId);
+    },
   },
 
   NodeObject: {
     actions: (parent) => {
       const actions = readJSONFile("action");
       if (!Array.isArray(parent.actionIds)) {
-        return []; // Return an empty array if actionIds is not defined or not an array
+        return [];
       }
       return actions.filter((action) => parent.actionIds.includes(action._id));
     },
     responses: (parent) => {
       const responses = readJSONFile("response");
       if (!Array.isArray(parent.responseIds)) {
-        return []; // Return an empty array if responseIds is not defined or not an array
+        return [];
       }
       return responses.filter((response) =>
         parent.responseIds.includes(response._id)
