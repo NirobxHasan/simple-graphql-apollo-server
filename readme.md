@@ -93,3 +93,11 @@ query {
   }
 }
 ```
+
+## Author
+
+- [@nirobxhasan](https://www.github.com/nirobxhasan)
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
