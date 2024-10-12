@@ -4,6 +4,7 @@ import fs from "fs";
 import { GraphQLJSON, GraphQLLong } from "graphql-scalars";
 import path from "path";
 import { fileURLToPath } from "url";
+import authContext from "./context/authContext.js";
 import typeDefs from "./schema/schema.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -92,8 +93,14 @@ const server = new ApolloServer({
   resolvers,
 });
 
-const { url } = await startStandaloneServer(server, {
-  listen: { port: 4000 },
-});
+const { url } = await startStandaloneServer(
+  server,
+  {
+    context: async ({ req }) => authContext(req),
+  },
+  {
+    listen: { port: 4000 },
+  }
+);
 
 console.log(`🚀 Server ready at: ${url}`);
