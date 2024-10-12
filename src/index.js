@@ -32,6 +32,11 @@ const resolvers = {
       const actions = readJSONFile("action");
       return actions.find((action) => action._id === args.actionId);
     },
+
+    response: (parent, args) => {
+      const responses = readJSONFile("response");
+      return responses.find((response) => response._id === args.responseId);
+    },
   },
 
   NodeObject: {

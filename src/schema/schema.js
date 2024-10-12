@@ -86,6 +86,7 @@ const typeDefs = `
     node(nodeId: ID): NodeObject
     nodesByCompositeId(compositeId: ID!): [NodeObject]
     action(actionId: ID): Action
+    response(responseId: ID): Response
   }
 `;
 
