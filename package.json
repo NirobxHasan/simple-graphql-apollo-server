@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/index.js",
-    "start:dev": "nodemon ./src/index.js"
+    "start:dev": "nodemon ./src/index.js",
+    "generateToken": "node ./src/token/tokenGenerator.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,7 @@
   "dependencies": {
     "@apollo/server": "^4.11.0",
     "graphql": "^16.9.0",
-    "graphql-scalars": "^1.23.0"
+    "graphql-scalars": "^1.23.0",
+    "jsonwebtoken": "^9.0.2"
   }
 }
