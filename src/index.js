@@ -16,25 +16,35 @@ const readJSONFile = (filename) => {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
 };
 
+const checkAuth = (context) => {
+  if (!context.user) {
+    throw new Error("Authentication required");
+  }
+};
+
 const resolvers = {
   Long: GraphQLLong,
   JSON: GraphQLJSON,
 
   Query: {
-    node: (parent, args) => {
+    node: (parent, args, context) => {
+      checkAuth(context);
       const nodes = readJSONFile("node");
       return nodes.find((node) => node._id === args.nodeId);
     },
-    nodesByCompositeId: (parent, args) => {
+    nodesByCompositeId: (parent, args, context) => {
+      checkAuth(context);
       const nodes = readJSONFile("node");
       return nodes.filter((node) => node.compositeId === args.compositeId);
     },
-    action: (parent, args) => {
+    action: (parent, args, context) => {
+      checkAuth(context);
       const actions = readJSONFile("action");
       return actions.find((action) => action._id === args.actionId);
     },
 
-    response: (parent, args) => {
+    response: (parent, args, context) => {
+      checkAuth(context);
       const responses = readJSONFile("response");
       return responses.find((response) => response._id === args.responseId);
     },
