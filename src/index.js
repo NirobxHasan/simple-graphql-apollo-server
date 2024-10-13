@@ -30,7 +30,16 @@ const resolvers = {
     node: (parent, args, context) => {
       checkAuth(context);
       const nodes = readJSONFile("node");
-      return nodes.find((node) => node._id === args.nodeId);
+      const node = nodes.find((node) => node._id === args.nodeId);
+
+      if (!node) return null;
+      return {
+        ...node,
+        triggerId: node.trigger || null,
+        responseIds: node.responses || null,
+        actionIds: node.actions || null,
+        parentIds: node.parents || null,
+      };
     },
     nodesByCompositeId: (parent, args, context) => {
       checkAuth(context);
@@ -56,20 +65,38 @@ const resolvers = {
       if (!Array.isArray(parent.actionIds)) {
         return [];
       }
-      return actions.filter((action) => parent.actionIds.includes(action._id));
+
+      return parent.actionIds.map((actionId) => {
+        const action = actions.find((action) => action._id === actionId);
+        return action || null;
+      });
     },
     responses: (parent) => {
       const responses = readJSONFile("response");
       if (!Array.isArray(parent.responseIds)) {
         return [];
       }
-      return responses.filter((response) =>
-        parent.responseIds.includes(response._id)
-      );
+
+      return parent.responseIds.map((responseId) => {
+        const response = responses.find(
+          (response) => response._id === responseId
+        );
+        return response || null;
+      });
+    },
+    parents: (parent) => {
+      const nodes = readJSONFile("node");
+      if (!Array.isArray(parent.parentIds)) {
+        return [];
+      }
+      return parent.parentIds.map((parentId) => {
+        const node = nodes.find((node) => node._id === parentId);
+        return node || null;
+      });
     },
     trigger: (parent) => {
       const triggers = readJSONFile("trigger");
-      return triggers.find((trigger) => trigger._id === parent.triggerId);
+      return triggers.find((trigger) => trigger._id === parent.trigger);
     },
     resourceTemplate: (parent) => {
       const templates = readJSONFile("resourceTemplate");

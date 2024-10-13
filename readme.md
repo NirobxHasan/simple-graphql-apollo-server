@@ -69,15 +69,23 @@ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoidGhl
 #### Fetch a Node by ID
 
 ```bash
-query {
-  action(actionId: "6530933e6a1690d2f0c78a92") {
-    _id
-    name
-    resourceTemplate {
+query  {
+  node(nodeId:"62971a9570a0c12bb389cd13") {
+     name
+    triggerId
+    trigger {
+      _id
+      resourceTemplateId
+    }
+    responseIds
+    actionIds
+    parentIds
+    parents {
       name
-    },
-    responses: name
-
+      description
+      actionIds
+      parentIds
+    }
   }
 }
 ```
